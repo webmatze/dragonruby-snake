@@ -20,6 +20,15 @@ def tick args
   new_head = {x: head[:x] + args.state.direction[:x], y: head[:y] + args.state.direction[:y]}
   args.state.snake.unshift(new_head)
 
+  # Check if the snake has hit itself or the edge of the screen
+  if new_head[:x] < 0 || new_head[:y] < 0 || new_head[:x] >= 64 || new_head[:y] >= 48 || args.state.snake[1..-1].any? { |segment| segment[:x] == new_head[:x] && segment[:y] == new_head[:y] }
+    # Reset the game
+    args.state.snake = [{x: 10, y: 10}]
+    args.state.direction = {x: 1, y: 0}
+    args.state.food = {x: 15, y: 15}
+    return
+  end
+
   # Check if the snake has eaten the food
   if args.state.snake.first[:x] == args.state.food[:x] && args.state.snake.first[:y] == args.state.food[:y]
     # Spawn new food at a random position
