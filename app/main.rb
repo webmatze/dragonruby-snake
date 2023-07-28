@@ -19,7 +19,15 @@ def tick args
   head = args.state.snake.first
   new_head = {x: head[:x] + args.state.direction[:x], y: head[:y] + args.state.direction[:y]}
   args.state.snake.unshift(new_head)
-  args.state.snake.pop
+
+  # Check if the snake has eaten the food
+  if args.state.snake.first[:x] == args.state.food[:x] && args.state.snake.first[:y] == args.state.food[:y]
+    # Spawn new food at a random position
+    args.state.food = {x: rand(64), y: rand(48)}
+  else
+    # If the snake didn't eat the food, remove the last segment
+    args.state.snake.pop
+  end
 
   # Draw the snake
   args.state.snake.each do |segment|
