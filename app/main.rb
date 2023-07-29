@@ -1,8 +1,8 @@
 def tick args
   # Initialize game state
   args.state.pixel_grid ||= 20
-  args.state.grid_width ||= 64
-  args.state.grid_height ||= 48
+  args.state.grid_width ||= args.grid.w / args.state.pixel_grid
+  args.state.grid_height ||= args.grid.h / args.state.pixel_grid
   args.state.snake ||= [{x: args.state.pixel_grid, y: args.state.pixel_grid}]
   args.state.direction ||= {x: 1, y: 0}
   args.state.food ||= {x: 15, y: 15}
